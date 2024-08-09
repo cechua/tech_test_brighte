@@ -1,9 +1,10 @@
 import './App.css';
+import ReferralForm from './components/ReferralForm';
 
 function App() {
   return (
     <>
-      <h1 className="text-3xl font-bold">Referral Builder</h1>
+      <ReferralForm />
     </>
   );
 }
