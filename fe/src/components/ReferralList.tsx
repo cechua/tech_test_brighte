@@ -1,37 +1,13 @@
+import { useContext, useEffect } from 'react';
 import { DeleteIcon } from './common/SvgIcons/DeleteIcon';
 import { EditIcon } from './common/SvgIcons/EditIcon';
-const mockUsers = [
-  {
-    id: 1,
-    givenName: 'John',
-    surName: 'Johnson',
-    email: 'jh@email@121.com',
-    phone: '0453-283-283',
-  },
-  {
-    id: 2,
-    givenName: 'Matthew',
-    surName: 'Lombard',
-    email: 'mat197501@gmail.com',
-    phone: '0453-123-123',
-  },
-  {
-    id: 3,
-    givenName: 'Joe',
-    surName: 'Dickson',
-    email: 'joe@dickson.com',
-    phone: '0453-283-283',
-  },
-  {
-    id: 4,
-    givenName: 'Scarlet',
-    surName: 'Johnson',
-    email: 'scarlet@johnson.com',
-    phone: '0453-283-283',
-  },
-];
+import UserContext from '../context/UserContext';
 
 const ReferralList = () => {
+  const { users, fetchUsers } = useContext(UserContext);
+  useEffect(() => {
+    fetchUsers();
+  }, []);
   return (
     <div className="bg-white p-8 rounded w-full min-h-96 relative overflow-x-auto">
       <table className="w-full text-sm text-left">
@@ -47,8 +23,8 @@ const ReferralList = () => {
           </tr>
         </thead>
         <tbody>
-          {mockUsers.length > 0 ? (
-            mockUsers.map((user) => (
+          {users && users.length > 0 ? (
+            users.map((user) => (
               <tr
                 className="border-b border-secondary h-12 text-secondary-text"
                 key={user.id}
@@ -70,7 +46,7 @@ const ReferralList = () => {
               </tr>
             ))
           ) : (
-            <tr>
+            <tr className="text-secondary-text">
               <td>No Referred Users.</td>
             </tr>
           )}

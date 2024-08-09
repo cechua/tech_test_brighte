@@ -1,7 +1,9 @@
 import { useForm, SubmitHandler, UseFormRegister, Path } from 'react-hook-form';
 import { z, ZodType } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-interface IFormInput {
+import { useContext } from 'react';
+import UserContext from '../context/UserContext';
+export type IFormInput = {
   givenName: string;
   surName: string;
   email: string;
@@ -10,9 +12,9 @@ interface IFormInput {
   street: string;
   suburb: string;
   state: string;
-  postcode: string;
+  postCode: string;
   country: string;
-}
+};
 
 interface CustomInputProps {
   name: Path<IFormInput>;
@@ -34,7 +36,7 @@ const ReferralFormSchema: ZodType<IFormInput> = z.object({
   street: z.string().min(2).max(50),
   suburb: z.string().min(2).max(50),
   state: z.string().min(2).max(50),
-  postcode: z.string().min(4).max(9),
+  postCode: z.string().min(4).max(9),
   country: z.string().min(2).max(30),
 });
 
@@ -61,12 +63,14 @@ const ReferralForm = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<IFormInput>({
     resolver: zodResolver(ReferralFormSchema), // Apply the zodResolver
   });
-
+  const { postUser } = useContext(UserContext);
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    console.log(data);
+    postUser(data);
+    reset();
   };
 
   return (
@@ -138,10 +142,10 @@ const ReferralForm = () => {
               errorMessage={errors.state?.message || ''}
             />
             <CustomInputField
-              name="postcode"
+              name="postCode"
               label="Postcode"
               register={register}
-              errorMessage={errors.postcode?.message || ''}
+              errorMessage={errors.postCode?.message || ''}
             />
             <CustomInputField
               name="country"
@@ -152,7 +156,10 @@ const ReferralForm = () => {
           </div>
         </div>
         <div className="flex justify-between gap-2 sm:gap-4">
-          <button className="border border-secondary  h-16 uppercase text-secondary-text rounded text-lg font-bold w-full md:w-80">
+          <button
+            className="border border-secondary  h-16 uppercase text-secondary-text rounded text-lg font-bold w-full md:w-80"
+            type="button"
+          >
             Upload Avatar
           </button>
           <button
