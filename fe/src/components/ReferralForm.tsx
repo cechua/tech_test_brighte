@@ -22,16 +22,20 @@ interface CustomInputProps {
 }
 
 const ReferralFormSchema: ZodType<IFormInput> = z.object({
-  givenName: z.string().min(2).max(100),
-  surName: z.string().min(2),
-  email: z.string().min(2),
-  phone: z.string().min(2),
-  homeName: z.string().min(2),
-  street: z.string().min(2),
-  suburb: z.string().min(2),
-  state: z.string().min(2),
-  postcode: z.string().min(2),
-  country: z.string().min(2),
+  givenName: z.string().min(2).max(20),
+  surName: z.string().min(2).max(20),
+  email: z.string().email('This is not a valid email.'),
+  phone: z
+    .string()
+    .regex(/\d+/, { message: 'Numbers input only' })
+    .min(8, { message: 'Must only be 8 digits.' })
+    .max(8, { message: 'Must only be 8 digits.' }),
+  homeName: z.string().min(1).max(50),
+  street: z.string().min(2).max(50),
+  suburb: z.string().min(2).max(50),
+  state: z.string().min(2).max(50),
+  postcode: z.string().min(4).max(9),
+  country: z.string().min(2).max(30),
 });
 
 const CustomInputField = ({
