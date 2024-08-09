@@ -24,6 +24,7 @@ Defaults to Port 5173 - http://localhost:5173
 ```bash
 cd be
 npm install
+cp .env.example .env
 npm start
 ```
 Defaults to Port 3000 - http://localhost:3000
