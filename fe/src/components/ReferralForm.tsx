@@ -70,7 +70,7 @@ const ReferralForm = () => {
   };
 
   return (
-    <div className="w-full lg:w-[700px] p-4">
+    <div className="w-full lg:w-[750px] p-4 lg:p-8 bg-white rounded">
       <h1 className="text-3xl font-bold text-primary-text mb-4">
         Referral Builder
       </h1>

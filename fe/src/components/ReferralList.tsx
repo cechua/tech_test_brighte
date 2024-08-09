@@ -33,7 +33,7 @@ const mockUsers = [
 
 const ReferralList = () => {
   return (
-    <div className="bg-white p-8 rounded w-1/2">
+    <div className="bg-white p-8 rounded w-full min-h-96 relative overflow-x-auto">
       <table className="w-full text-sm text-left">
         <thead className="text-md text-secondary font-bold border-b border-secondary uppercase">
           <tr>
@@ -53,11 +53,11 @@ const ReferralList = () => {
                 className="border-b border-secondary h-12 text-secondary-text"
                 key={user.id}
               >
-                <td className="pr-4">{user.givenName}</td>
-                <td className="pr-4">{user.surName}</td>
-                <td className="pr-4">{user.email}</td>
-                <td className="pr-4">{user.phone}</td>
-                <td className="pr-4">
+                <td className="pr-4 whitespace-nowrap">{user.givenName}</td>
+                <td className="pr-4 whitespace-nowrap">{user.surName}</td>
+                <td className="pr-4 whitespace-nowrap">{user.email}</td>
+                <td className="pr-4 whitespace-nowrap">{user.phone}</td>
+                <td className="pr-4 whitespace-nowrap">
                   <>
                     <button className="pr-4">
                       <EditIcon filled size={20} />

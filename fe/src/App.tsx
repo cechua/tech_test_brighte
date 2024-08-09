@@ -4,9 +4,11 @@ import ReferralList from './components/ReferralList';
 
 function App() {
   return (
-    <div className="flex px-8 items-center ">
-      <ReferralForm />
-      <ReferralList />
+    <div className="bg-secondary-light">
+      <div className="flex flex-col md:items-center xl:flex-row px-4 gap-4 py-4 ">
+        <ReferralForm />
+        <ReferralList />
+      </div>
     </div>
   );
 }
