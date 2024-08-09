@@ -37,4 +37,5 @@ Port can be changed by making an .env file however this will require a change in
 
 ![image](https://github.com/user-attachments/assets/128a7a43-e2e6-4233-b26d-fa639422792c)
 
-![image](https://github.com/user-attachments/assets/f39ce11b-d2ff-4388-a49e-208f28665e0b)
+![image](https://github.com/user-attachments/assets/807841c7-31da-4423-92e9-9b218ac8bac7)
+
