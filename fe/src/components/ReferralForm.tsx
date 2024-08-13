@@ -52,6 +52,7 @@ const CustomInputField = ({
       <input
         {...register(name)}
         className="border border-secondary rounded w-full h-10 text-secondary-text px-2"
+        data-testid={`referralForm-input-${name}`}
       />
       {errorMessage && <p className="text-error">{errorMessage}</p>}
     </div>
