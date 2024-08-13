@@ -4,8 +4,8 @@ import { EditIcon } from './common/SvgIcons/EditIcon';
 import UserContext from '../context/UserContext';
 
 enum SORT_TYPES {
-  ASCENDING = 'asc',
-  DESCENDING = 'desc',
+  ASCENDING = 'Ascending',
+  DESCENDING = 'Descending',
 }
 
 const ReferralList = () => {
@@ -20,35 +20,39 @@ const ReferralList = () => {
 
   const sortUsers = useCallback(() => {
     const isAscending = sortMethod == SORT_TYPES.ASCENDING;
-    const sorted = users?.sort(function (a, b) {
-      if (a.givenName < b.givenName) {
-        return isAscending ? -1 : 1;
-      }
-      if (a.givenName > b.givenName) {
-        return isAscending ? 1 : -1;
-      }
-      return 0;
-    });
-    setSortedUsers(sorted);
+
+    const sorted =
+      users &&
+      users.sort(function (a, b) {
+        if (a.givenName < b.givenName) {
+          return isAscending ? -1 : 1;
+        }
+        if (a.givenName > b.givenName) {
+          return isAscending ? 1 : -1;
+        }
+        return 0;
+      });
+    if (sorted) setSortedUsers([...sorted]);
   }, [users, sortMethod]);
 
   useEffect(() => {
-    //setSortedUsers(users);
     sortUsers();
-  }, [sortUsers]);
+  }, [users, sortUsers]);
 
   const handleSort = () => {
-    sortUsers();
     setSortMethod((prevVal) =>
       prevVal == SORT_TYPES.ASCENDING
         ? SORT_TYPES.DESCENDING
         : SORT_TYPES.ASCENDING
     );
   };
-
   return (
     <div className="bg-white p-8 rounded w-full min-h-96 relative overflow-x-auto">
-      <button className="border" onClick={() => handleSort()}>
+      <button
+        className="border"
+        onClick={() => handleSort()}
+        data-testid={'referralList-sort-cta'}
+      >
         {sortMethod}
       </button>
       <table className="w-full text-sm text-left">
@@ -63,7 +67,7 @@ const ReferralList = () => {
             <th scope="col">Actions</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody data-testid={'referralList-tbody-users'}>
           {sortedUsers && sortedUsers.length > 0 ? (
             sortedUsers.map((user) => (
               <tr
