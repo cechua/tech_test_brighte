@@ -1,15 +1,56 @@
-import { useContext, useEffect } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { DeleteIcon } from './common/SvgIcons/DeleteIcon';
 import { EditIcon } from './common/SvgIcons/EditIcon';
 import UserContext from '../context/UserContext';
 
+enum SORT_TYPES {
+  ASCENDING = 'asc',
+  DESCENDING = 'desc',
+}
+
 const ReferralList = () => {
   const { users, fetchUsers } = useContext(UserContext);
+  const [sortMethod, setSortMethod] = useState<SORT_TYPES>(
+    SORT_TYPES.ASCENDING
+  );
+  const [sortedUsers, setSortedUsers] = useState(users);
   useEffect(() => {
     fetchUsers();
   }, []);
+
+  const sortUsers = useCallback(() => {
+    const isAscending = sortMethod == SORT_TYPES.ASCENDING;
+    const sorted = users?.sort(function (a, b) {
+      if (a.givenName < b.givenName) {
+        return isAscending ? -1 : 1;
+      }
+      if (a.givenName > b.givenName) {
+        return isAscending ? 1 : -1;
+      }
+      return 0;
+    });
+    setSortedUsers(sorted);
+  }, [users, sortMethod]);
+
+  useEffect(() => {
+    //setSortedUsers(users);
+    sortUsers();
+  }, [sortUsers]);
+
+  const handleSort = () => {
+    sortUsers();
+    setSortMethod((prevVal) =>
+      prevVal == SORT_TYPES.ASCENDING
+        ? SORT_TYPES.DESCENDING
+        : SORT_TYPES.ASCENDING
+    );
+  };
+
   return (
     <div className="bg-white p-8 rounded w-full min-h-96 relative overflow-x-auto">
+      <button className="border" onClick={() => handleSort()}>
+        {sortMethod}
+      </button>
       <table className="w-full text-sm text-left">
         <thead className="text-md text-secondary font-bold border-b border-secondary uppercase">
           <tr>
@@ -23,8 +64,8 @@ const ReferralList = () => {
           </tr>
         </thead>
         <tbody>
-          {users && users.length > 0 ? (
-            users.map((user) => (
+          {sortedUsers && sortedUsers.length > 0 ? (
+            sortedUsers.map((user) => (
               <tr
                 className="border-b border-secondary h-12 text-secondary-text"
                 key={user.id}

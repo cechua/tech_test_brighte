@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { IFormInput } from '../components/ReferralForm';
 import axios from 'axios';
 const API_URL = 'http://localhost:3000/users';
@@ -29,7 +29,15 @@ const useUsers = () => {
     }
   };
 
-  return { fetchUsers, users, postUser, setUsers };
+  const clearUsers = useCallback(() => {
+    try {
+      setUsers([]);
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+
+  return { fetchUsers, users, postUser, setUsers, clearUsers };
 };
 
 export default useUsers;

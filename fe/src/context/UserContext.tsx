@@ -6,6 +6,7 @@ interface UserContextProps {
   users: UserType[] | undefined;
   fetchUsers: () => void;
   postUser: (user: IFormInput) => void;
+  clearUsers: () => void;
 }
 
 const UserContext = createContext<UserContextProps>({} as UserContextProps);
@@ -15,13 +16,14 @@ interface UserContextProviderProps {
 }
 
 export const UserContextProvider = ({ children }: UserContextProviderProps) => {
-  const { users, fetchUsers, postUser } = useUsers();
+  const { users, fetchUsers, postUser, clearUsers } = useUsers();
   return (
     <UserContext.Provider
       value={{
         users,
         fetchUsers,
         postUser,
+        clearUsers,
       }}
     >
       {children}

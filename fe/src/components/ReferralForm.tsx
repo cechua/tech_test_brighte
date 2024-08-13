@@ -58,7 +58,11 @@ const CustomInputField = ({
   );
 };
 
-const ReferralForm = () => {
+type ReferralFormProps = {
+  isMobile?: boolean;
+};
+
+const ReferralForm = ({ isMobile = true }: ReferralFormProps) => {
   const {
     register,
     handleSubmit,
@@ -67,7 +71,7 @@ const ReferralForm = () => {
   } = useForm<IFormInput>({
     resolver: zodResolver(ReferralFormSchema), // Apply the zodResolver
   });
-  const { postUser } = useContext(UserContext);
+  const { postUser, clearUsers } = useContext(UserContext);
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     postUser(data);
     reset();
@@ -168,6 +172,11 @@ const ReferralForm = () => {
           >
             Create Referral
           </button>
+          {isMobile && (
+            <button onClick={() => clearUsers()} type="button">
+              Mobile
+            </button>
+          )}
         </div>
       </form>
     </div>
