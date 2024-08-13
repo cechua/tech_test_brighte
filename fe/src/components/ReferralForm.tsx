@@ -54,7 +54,14 @@ const CustomInputField = ({
         className="border border-secondary rounded w-full h-10 text-secondary-text px-2"
         data-testid={`referralForm-input-${name}`}
       />
-      {errorMessage && <p className="text-error">{errorMessage}</p>}
+      {errorMessage && (
+        <p
+          className="text-error"
+          data-testid={`referralForm-inputError-${name}`}
+        >
+          {errorMessage}
+        </p>
+      )}
     </div>
   );
 };
